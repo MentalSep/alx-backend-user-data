@@ -7,5 +7,7 @@ from typing import List
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """Filtering data from log message"""
-    pattern = rf"(?:{separator})({'|'.join(fields)})=(.*?)(?={separator}|$)"
-    return re.sub(pattern, rf"\1={redaction}", message)
+    pattern = '|'.join(f'({field}=[^;]*)' for field in fields)
+    redact = {'pattern': lambda match: re.sub(r'=.+', f'={redaction}',
+                                              match.group())}
+    return re.sub(pattern, redact['pattern'], message)
