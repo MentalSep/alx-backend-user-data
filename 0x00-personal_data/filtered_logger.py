@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Module filttered_logger.py"""
 import re
-from typing import List, Union
+from typing import List
 import logging
 import os
 import mysql.connector
