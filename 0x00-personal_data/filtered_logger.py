@@ -47,7 +47,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> Union[mysql.connector.connection.MySQLConnection, None]:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """returns a connector to the database"""
     return mysql.connector.connect(
         host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
