@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Module filttered_logger.py"""
 import re
-from typing import List
+from typing import List, Union
 import logging
 import os
 import mysql.connector
@@ -47,7 +47,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> Union[mysql.connector.connection.MySQLConnection, None]:
     """returns a connector to the database"""
     return mysql.connector.connect(
         host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
