@@ -4,6 +4,7 @@ from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 from datetime import datetime, timedelta
 import os
+import logging
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -23,6 +24,10 @@ class SessionDBAuth(SessionExpAuth):
 
         user_session = UserSession.search({'session_id': session_id})
         if not user_session:
+            return None
+
+        if datetime.now() > user_session[0].created_at + \
+                timedelta(seconds=self.session_duration):
             return None
 
         return user_session[0].user_id
