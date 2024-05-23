@@ -33,7 +33,8 @@ class SessionDBAuth(SessionExpAuth):
         if created_at is None:
             return None
 
-        expiration_time = created_at + timedelta(seconds=self.session_duration)
+        expiration_time = created_at + timedelta(
+            seconds=self.session_duration, hours=1)
         if expiration_time < datetime.now():
             return None
 
