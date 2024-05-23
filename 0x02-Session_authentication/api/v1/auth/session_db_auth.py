@@ -21,9 +21,9 @@ class SessionDBAuth(SessionExpAuth):
         """Returns the User ID based on a Session ID from the database"""
         if session_id is None:
             return None
-
-        user_session = UserSession.search({'session_id': session_id})
-        if not user_session:
+        try:
+            user_session = UserSession.search({'session_id': session_id})
+        except Exception:
             return None
 
         if datetime.now() > user_session[0].created_at + \
