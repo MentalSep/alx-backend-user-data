@@ -26,6 +26,9 @@ class SessionDBAuth(SessionExpAuth):
         except Exception:
             return None
 
+        if not user_session:
+            return None
+
         if datetime.now() > user_session[0].created_at + \
                 timedelta(seconds=self.session_duration):
             return None
