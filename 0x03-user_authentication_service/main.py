@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Main file"""
 import requests
 
@@ -9,18 +9,21 @@ NEW_PASSWD = "t4rt1fl3tt3"
 
 
 def register_user(email: str, password: str) -> None:
+    """Register a new user"""
     body = {"email": email, "password": password}
     response = requests.post(f"{BASE_URL}/users", data=body)
     assert response.status_code == 200
 
 
 def log_in_wrong_password(email: str, password: str) -> None:
+    """Log in with the wrong password"""
     body = {"email": email, "password": password}
     response = requests.post(f"{BASE_URL}/sessions", data=body)
     assert response.status_code == 401
 
 
 def log_in(email: str, password: str) -> str:
+    """Log in with the correct password"""
     body = {"email": email, "password": password}
     response = requests.post(f"{BASE_URL}/sessions", data=body)
     assert response.status_code == 200
@@ -28,23 +31,27 @@ def log_in(email: str, password: str) -> str:
 
 
 def profile_unlogged() -> None:
+    """Profile unlogged"""
     response = requests.get(f"{BASE_URL}/profile")
     assert response.status_code == 403
 
 
 def profile_logged(session_id: str) -> None:
+    """Profile logged"""
     cookies = {"session_id": session_id}
     response = requests.get(f"{BASE_URL}/profile", cookies=cookies)
     assert response.status_code == 200
 
 
 def log_out(session_id: str) -> None:
+    """Log out"""
     cookies = {"session_id": session_id}
     response = requests.delete(f"{BASE_URL}/sessions", cookies=cookies)
     assert response.status_code == 200
 
 
 def reset_password_token(email: str) -> str:
+    """Reset password token"""
     body = {"email": email}
     response = requests.post(f"{BASE_URL}/reset_password", data=body)
     assert response.status_code == 200
@@ -52,6 +59,7 @@ def reset_password_token(email: str) -> str:
 
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
+    """Update password"""
     body = {"email": email, "reset_token": reset_token,
             "new_password": new_password}
     response = requests.put(f"{BASE_URL}/reset_password", data=body)
